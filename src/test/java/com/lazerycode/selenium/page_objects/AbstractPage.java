@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Łukasz on 20.05.2018.
@@ -22,6 +23,7 @@ public class AbstractPage {
     protected Query languageSwitcher = new Query(By.className("language-switcher-locale-url"), driver);
 
     public AbstractPage() throws Exception {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public AbstractPage verifyPageLanguage(QualityMindsHomePage.Language lang) {
@@ -55,6 +57,17 @@ public class AbstractPage {
         }
     }
 
+    public void switchToLanguage(Language lang) {
+        List<WebElement> elements = languageSwitcher.findWebElement().findElements(By.tagName("li"));
+
+        for (WebElement element : elements) {
+            if (element.getAttribute("class").contains(lang.getLanguageSwitcher())) {
+                element.click();
+                break;
+            }
+        }
+    }
+
     public MobileTestingPage clickTab(Tabs tab) throws Exception {
 
         return new MobileTestingPage();
@@ -70,6 +83,21 @@ public class AbstractPage {
 
         public String getTabName() {
             return tabName;
+        }
+    }
+
+    public enum Language {
+        EN("en menu"),
+        DE("de menu");
+
+        private String languageSwitcher;
+
+        Language(String languageSwitcher) {
+            this.languageSwitcher=languageSwitcher;
+        }
+
+        public String getLanguageSwitcher() {
+            return languageSwitcher;
         }
     }
 }

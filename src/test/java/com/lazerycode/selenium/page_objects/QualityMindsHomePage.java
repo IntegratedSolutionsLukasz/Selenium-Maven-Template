@@ -21,34 +21,9 @@ public class QualityMindsHomePage extends AbstractPage{
 
     public QualityMindsHomePage() throws Exception {
         driver.get(homePageAddress);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
 
 
-    public void switchToLanguage(Language lang) {
-        List<WebElement> elements = languageSwitcher.findWebElement().findElements(By.tagName("li"));
 
-        for (WebElement element : elements) {
-            if (element.getAttribute("class").contains(lang.getLanguageSwitcher())) {
-                element.click();
-                break;
-            }
-        }
-    }
-
-    public enum Language {
-        EN("en menu"),
-        DE("de menu");
-
-        private String languageSwitcher;
-
-        Language(String languageSwitcher) {
-            this.languageSwitcher=languageSwitcher;
-        }
-
-        public String getLanguageSwitcher() {
-            return languageSwitcher;
-        }
-    }
 }
