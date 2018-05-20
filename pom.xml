@@ -37,6 +37,34 @@
         </license>
     </licenses>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+
+                <configuration>
+                    <systemPropertyVariables>
+                        <webdriver.gecko.driver>
+                            ${project.basedir}/target/test-classes/selenium_standalone_binaries/windows/marionette/64bit/geckodriver.exe
+                        </webdriver.gecko.driver>
+                        <webdriver.chrome.driver>
+                            ${project.basedir}/target/test-classes/selenium_standalone_binaries/windows/googlechrome/64bit/chromedriver.exe
+                        </webdriver.chrome.driver>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -102,9 +130,45 @@
 
     <profiles>
         <profile>
-            <id>selenium-tests</id>
+            <id>Qualityminds-selenium-tests</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.lazerycode.selenium</groupId>
+                        <artifactId>driver-binary-downloader-maven-plugin</artifactId>
+                        <version>${driver-binary-downloader-maven-plugin.version}</version>
+                        <configuration>
+                            <rootStandaloneServerDirectory>${project.basedir}/src/test/resources/selenium_standalone_binaries</rootStandaloneServerDirectory>
+                            <downloadedZipFileDirectory>${project.basedir}/src/test/resources/selenium_standalone_zips</downloadedZipFileDirectory>
+                            <customRepositoryMap>${project.basedir}/src/test/resources/RepositoryMap.xml</customRepositoryMap>
+                            <overwriteFilesThatExist>${overwrite.binaries}</overwriteFilesThatExist>
+                            <onlyGetDriversForHostOperatingSystem>false</onlyGetDriversForHostOperatingSystem>
+                            <fileDownloadRetryAttempts>${retry.attempts}</fileDownloadRetryAttempts>
+                            <fileDownloadReadTimeout>${read.timeout}</fileDownloadReadTimeout>
+                            <operatingSystems>
+                                <windows>true</windows>
+                                <linux>true</linux>
+                                <mac>true</mac>
+                            </operatingSystems>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>selenium</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>selenium-tests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -122,9 +186,13 @@
                         <artifactId>driver-binary-downloader-maven-plugin</artifactId>
                         <version>${driver-binary-downloader-maven-plugin.version}</version>
                         <configuration>
-                            <rootStandaloneServerDirectory>${project.basedir}/src/test/resources/selenium_standalone_binaries</rootStandaloneServerDirectory>
-                            <downloadedZipFileDirectory>${project.basedir}/src/test/resources/selenium_standalone_zips</downloadedZipFileDirectory>
-                            <customRepositoryMap>${project.basedir}/src/test/resources/RepositoryMap.xml</customRepositoryMap>
+                            <rootStandaloneServerDirectory>
+                                ${project.basedir}/src/test/resources/selenium_standalone_binaries
+                            </rootStandaloneServerDirectory>
+                            <downloadedZipFileDirectory>${project.basedir}/src/test/resources/selenium_standalone_zips
+                            </downloadedZipFileDirectory>
+                            <customRepositoryMap>${project.basedir}/src/test/resources/RepositoryMap.xml
+                            </customRepositoryMap>
                             <overwriteFilesThatExist>${overwrite.binaries}</overwriteFilesThatExist>
                             <onlyGetDriversForHostOperatingSystem>false</onlyGetDriversForHostOperatingSystem>
                             <fileDownloadRetryAttempts>${retry.attempts}</fileDownloadRetryAttempts>

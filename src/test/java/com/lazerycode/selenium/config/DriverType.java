@@ -31,7 +31,7 @@ public enum DriverType implements DriverSetup {
     },
     CHROME {
         public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
-            HashMap<String, Object> chromePreferences = new HashMap<>();
+            HashMap<String, Object> chromePreferences = new HashMap<String, Object>();
             chromePreferences.put("profile.password_manager_enabled", false);
 
             ChromeOptions options = new ChromeOptions();

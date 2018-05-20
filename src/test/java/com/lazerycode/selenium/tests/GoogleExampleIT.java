@@ -9,9 +9,7 @@ import org.testng.annotations.Test;
 
 public class GoogleExampleIT extends DriverBase {
 
-    private ExpectedCondition<Boolean> pageTitleStartsWith(final String searchString) {
-        return driver -> driver.getTitle().toLowerCase().startsWith(searchString.toLowerCase());
-    }
+
 
     @Test
     public void googleCheeseExample() throws Exception {
@@ -36,7 +34,7 @@ public class GoogleExampleIT extends DriverBase {
         // Google's search is rendered dynamically with JavaScript.
         // Wait for the page to load, timeout after 10 seconds
         WebDriverWait wait = new WebDriverWait(driver, 10, 100);
-        wait.until(pageTitleStartsWith("Cheese"));
+
 
         // Should see: "cheese! - Google Search"
         System.out.println("Page title is: " + driver.getTitle());
@@ -65,7 +63,6 @@ public class GoogleExampleIT extends DriverBase {
         // Google's search is rendered dynamically with JavaScript.
         // Wait for the page to load, timeout after 10 seconds
         WebDriverWait wait = new WebDriverWait(driver, 10, 100);
-        wait.until(pageTitleStartsWith("Milk"));
 
         // Should see: "cheese! - Google Search"
         System.out.println("Page title is: " + driver.getTitle());
