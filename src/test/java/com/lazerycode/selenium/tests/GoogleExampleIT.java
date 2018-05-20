@@ -1,19 +1,16 @@
 package com.lazerycode.selenium.tests;
 
 import com.lazerycode.selenium.DriverBase;
-import com.lazerycode.selenium.page_objects.AbstractPage;
-import com.lazerycode.selenium.page_objects.GoogleHomePage;
-import com.lazerycode.selenium.page_objects.MobileTestingPage;
-import com.lazerycode.selenium.page_objects.QualityMindsHomePage;
+import com.lazerycode.selenium.page_objects.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import static com.lazerycode.selenium.page_objects.AbstractPage.Tabs.MOBILE_TESTING;
+import static com.lazerycode.selenium.page_objects.AbstractPage.SubTabs.MOBILE_TESTING;
+import static com.lazerycode.selenium.page_objects.AbstractPage.Tabs.CAREER;
 
 public class GoogleExampleIT extends DriverBase {
-
 
 
     @Test
@@ -77,8 +74,8 @@ public class GoogleExampleIT extends DriverBase {
     public void TestCase1() throws Exception {
         QualityMindsHomePage qualityMindsHomePage = new QualityMindsHomePage();
         qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.DE);
-        qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
-        qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
+        qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN)
+                            .verifyPageLanguage(QualityMindsHomePage.Language.EN);
     }
 
     @Test
@@ -87,6 +84,20 @@ public class GoogleExampleIT extends DriverBase {
         qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
         qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
 
-        MobileTestingPage mobileTesting = qualityMindsHomePage.clickTab(MOBILE_TESTING);
+        MobileTestingPage mobileTesting = qualityMindsHomePage.clickSubTab(MOBILE_TESTING);
+
+        System.out.println("aa");
+    }
+
+    @Test
+    public void TestCase3() throws Exception {
+        QualityMindsHomePage qualityMindsHomePage = new QualityMindsHomePage();
+        qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
+        qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
+
+        CareerTestingPage careerTestingPage = qualityMindsHomePage.clickTab(CAREER);
+        careerTestingPage.clickApllyNow();
+
+        System.out.println("aa");
     }
 }

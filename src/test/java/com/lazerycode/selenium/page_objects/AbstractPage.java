@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,20 +22,22 @@ public class AbstractPage {
     final RemoteWebDriver driver = DriverBase.getDriver();
 
     protected Query languageSwitcher = new Query(By.className("language-switcher-locale-url"), driver);
+    protected Query topMenu = new Query(By.xpath("//ul[contains(@class, 'menu full')]"), driver);
+
 
     public AbstractPage() throws Exception {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 
     public AbstractPage verifyPageLanguage(QualityMindsHomePage.Language lang) {
         List<WebElement> elements = languageSwitcher.findWebElement().findElements(By.tagName("li"));
 
-        boolean active=false;
+        boolean active = false;
         for (WebElement element : elements) {
             if (element.getAttribute("class").contains("active")) {
-                Assert.assertFalse(active,"Two or more languages are active");
+                Assert.assertFalse(active, "Two or more languages are active");
                 Assert.assertTrue(element.getAttribute("class").contains(lang.getLanguageSwitcher()));
-                active=true;
+                active = true;
             }
         }
 
@@ -57,7 +60,7 @@ public class AbstractPage {
         }
     }
 
-    public void switchToLanguage(Language lang) {
+    public AbstractPage switchToLanguage(Language lang) {
         List<WebElement> elements = languageSwitcher.findWebElement().findElements(By.tagName("li"));
 
         for (WebElement element : elements) {
@@ -66,23 +69,63 @@ public class AbstractPage {
                 break;
             }
         }
+        return this;
     }
 
-    public MobileTestingPage clickTab(Tabs tab) throws Exception {
+    public <T extends AbstractPage>T clickSubTab(SubTabs tab) throws Exception {
+        WebElement aa = topMenu.findWebElement();
+        List<WebElement> topMenuTabs = topMenu.findWebElement().findElements(By.xpath("./li"));
 
-        return new MobileTestingPage();
+        for (WebElement searchedTab : topMenuTabs) {
+            List<WebElement> internalTabList = searchedTab.findElements(By.xpath(".//li"));
+            for (WebElement internalListElement : internalTabList) {
+                if (internalListElement.findElement(By.xpath("./a")).getAttribute("href").contains(tab.getSubTabsName())) {
+                    Actions actions = new Actions(driver);
+                    actions.moveToElement(searchedTab.findElement(By.xpath("./a"))).moveToElement(internalListElement.findElement(By.xpath("./a"))).click().build().perform();
+                    break;
+                }
+            }
+        }
+
+        switch (tab) {
+            case MOBILE_TESTING:return (T) new MobileTestingPage();
+        }
+
+        return null;
+    }
+
+    public <T extends AbstractPage>T clickTab(Tabs tab) throws Exception {
+        driver.findElement(By.linkText(tab.getTabName())).click();
+
+        switch (tab) {
+            case CAREER:return (T) new CareerTestingPage();
+        }
+        return null;
     }
 
     public enum Tabs {
-        MOBILE_TESTING("Mobile Testing");
-        private String tabName;
+        CAREER("Career");
+        private String TabName;
 
-        Tabs(String tabName) {
-            this.tabName = tabName;
+        Tabs(String TabName) {
+            this.TabName = TabName;
         }
 
         public String getTabName() {
-            return tabName;
+            return TabName;
+        }
+    }
+
+    public enum SubTabs {
+        MOBILE_TESTING("mobile");
+        private String SubTabName;
+
+        SubTabs(String SubTabName) {
+            this.SubTabName = SubTabName;
+        }
+
+        public String getSubTabsName() {
+            return SubTabName;
         }
     }
 
@@ -93,7 +136,7 @@ public class AbstractPage {
         private String languageSwitcher;
 
         Language(String languageSwitcher) {
-            this.languageSwitcher=languageSwitcher;
+            this.languageSwitcher = languageSwitcher;
         }
 
         public String getLanguageSwitcher() {

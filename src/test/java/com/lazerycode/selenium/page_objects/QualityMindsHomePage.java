@@ -17,10 +17,11 @@ public class QualityMindsHomePage extends AbstractPage{
 
 
     private final String homePageAddress = "http://www.qualityminds.de";
-
+    protected Query cookiesConsent = new Query(By.linkText("Alles klar!"), driver);
 
     public QualityMindsHomePage() throws Exception {
         driver.get(homePageAddress);
+        cookiesConsent.findWebElement().click();
     }
 
 
