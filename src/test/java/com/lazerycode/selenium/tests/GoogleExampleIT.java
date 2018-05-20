@@ -2,6 +2,7 @@ package com.lazerycode.selenium.tests;
 
 import com.lazerycode.selenium.DriverBase;
 import com.lazerycode.selenium.page_objects.GoogleHomePage;
+import com.lazerycode.selenium.page_objects.QualityMindsHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -66,5 +67,13 @@ public class GoogleExampleIT extends DriverBase {
 
         // Should see: "cheese! - Google Search"
         System.out.println("Page title is: " + driver.getTitle());
+    }
+
+    @Test
+    public void TestCase1() throws Exception {
+        QualityMindsHomePage qualityMindsHomePage = new QualityMindsHomePage();
+        qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.DE);
+        qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
+        qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
     }
 }
