@@ -1,12 +1,16 @@
 package com.lazerycode.selenium.tests;
 
 import com.lazerycode.selenium.DriverBase;
+import com.lazerycode.selenium.page_objects.AbstractPage;
 import com.lazerycode.selenium.page_objects.GoogleHomePage;
+import com.lazerycode.selenium.page_objects.MobileTestingPage;
 import com.lazerycode.selenium.page_objects.QualityMindsHomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import static com.lazerycode.selenium.page_objects.AbstractPage.Tabs.MOBILE_TESTING;
 
 public class GoogleExampleIT extends DriverBase {
 
@@ -75,5 +79,14 @@ public class GoogleExampleIT extends DriverBase {
         qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.DE);
         qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
         qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
+    }
+
+    @Test
+    public void TestCase2() throws Exception {
+        QualityMindsHomePage qualityMindsHomePage = new QualityMindsHomePage();
+        qualityMindsHomePage.switchToLanguage(QualityMindsHomePage.Language.EN);
+        qualityMindsHomePage.verifyPageLanguage(QualityMindsHomePage.Language.EN);
+
+        MobileTestingPage mobileTesting = qualityMindsHomePage.clickTab(MOBILE_TESTING);
     }
 }
