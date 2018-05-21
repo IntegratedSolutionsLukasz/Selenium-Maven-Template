@@ -12,6 +12,8 @@ import static com.lazerycode.selenium.page_objects.AbstractPage.Tabs.SERVICES;
 
 public class GoogleExampleIT extends DriverBase {
 
+    //drivers will be downloaded automatically thanks to maven and also path will be setup
+    //reporting is done by TestNG. You need to setup your IDE
     @Test
     public void TestCase1() throws Exception {
         QualityMindsHomePage qualityMindsHomePage = new QualityMindsHomePage();
