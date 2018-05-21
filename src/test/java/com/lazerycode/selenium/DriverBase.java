@@ -21,7 +21,7 @@ public class DriverBase {
         driverFactory = new ThreadLocal<DriverFactory>() {
             @Override
             protected DriverFactory initialValue() {
-                DriverFactory driverFactory = new DriverFactory();
+                DriverFactory driverFactory = new DriverFactory(browser);
                 webDriverThreadPool.add(driverFactory);
                 return driverFactory;
             }

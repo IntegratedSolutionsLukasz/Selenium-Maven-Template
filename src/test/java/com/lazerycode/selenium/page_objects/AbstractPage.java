@@ -83,6 +83,7 @@ public class AbstractPage {
                 if (internalListElement.findElement(By.xpath("./a")).getAttribute("href").contains(tab.getSubTabsName())) {
                     Actions actions = new Actions(driver);
                     actions.moveToElement(searchedTab.findElement(By.xpath("./a"))).moveToElement(internalListElement.findElement(By.xpath("./a"))).click().build().perform();
+                    driver.get(internalListElement.findElement(By.xpath("./a")).getAttribute("href"));
                     break search;
                 }
             }
@@ -108,7 +109,8 @@ public class AbstractPage {
     }
 
     public enum Tabs {
-        CAREER("Career");
+        CAREER("Career"),
+        SERVICES("Services");
         private String TabName;
 
         Tabs(String TabName) {

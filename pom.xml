@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-
+                <version>2.21.0</version>
                 <configuration>
                     <systemPropertyVariables>
                         <webdriver.gecko.driver>
@@ -137,6 +137,15 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                        <version>3.7.0</version>
+                    </plugin>
+                    <plugin>
                         <groupId>com.lazerycode.selenium</groupId>
                         <artifactId>driver-binary-downloader-maven-plugin</artifactId>
                         <version>${driver-binary-downloader-maven-plugin.version}</version>
@@ -179,7 +188,7 @@
                             <source>${java.version}</source>
                             <target>${java.version}</target>
                         </configuration>
-                        <version>${maven-compiler-plugin.version}</version>
+                        <version>3.7.0</version>
                     </plugin>
                     <plugin>
                         <groupId>com.lazerycode.selenium</groupId>

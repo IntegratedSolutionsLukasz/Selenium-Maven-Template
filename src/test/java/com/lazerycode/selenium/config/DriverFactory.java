@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.lazerycode.selenium.config.DriverType.CHROME;
-import static com.lazerycode.selenium.config.DriverType.FIREFOX;
 import static com.lazerycode.selenium.config.DriverType.valueOf;
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
@@ -27,11 +26,13 @@ public class DriverFactory {
     private final Integer proxyPort = Integer.getInteger("proxyPort");
     private final String proxyDetails = String.format("%s:%d", proxyHostname, proxyPort);
 
-    public DriverFactory() {
+    public DriverFactory(String browser) {
         DriverType driverType = CHROME;
-        String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
+        //String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
         try {
-            driverType = valueOf(browser);
+            if(browser!=null){
+                driverType = valueOf(browser);
+            }
         } catch (IllegalArgumentException ignored) {
             System.err.println("Unknown driver specified, defaulting to '" + driverType + "'...");
         } catch (NullPointerException ignored) {
@@ -95,6 +96,7 @@ public class DriverFactory {
             driver = new RemoteWebDriver(seleniumGridURL, desiredCapabilities);
         } else {
             driver = driverType.getWebDriverObject(desiredCapabilities);
+            driver.manage().window().maximize();
         }
     }
 }
