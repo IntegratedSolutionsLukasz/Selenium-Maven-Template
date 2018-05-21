@@ -44,6 +44,5 @@ public class GoogleExampleIT extends DriverBase {
 
         careerTestingPage.switchToLanguage(QualityMindsHomePage.Language.DE);
         careerTestingPage.checkCurrentURL("http://www.qualityminds.de/content/bewerbung");
-        System.out.println("aa");
     }
 }
