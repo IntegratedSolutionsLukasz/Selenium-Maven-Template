@@ -32,7 +32,7 @@ public class DriverBase {
         return driverFactory.get().getDriver();
     }
 
-    //@AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public static void clearCookies() {
         try {
             driverFactory.get().getStoredDriver().manage().deleteAllCookies();

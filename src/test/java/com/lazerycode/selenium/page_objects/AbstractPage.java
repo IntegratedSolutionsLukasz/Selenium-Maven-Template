@@ -76,16 +76,20 @@ public class AbstractPage {
         WebElement aa = topMenu.findWebElement();
         List<WebElement> topMenuTabs = topMenu.findWebElement().findElements(By.xpath("./li"));
 
-        for (WebElement searchedTab : topMenuTabs) {
+        search:{
+            for (WebElement searchedTab : topMenuTabs) {
             List<WebElement> internalTabList = searchedTab.findElements(By.xpath(".//li"));
             for (WebElement internalListElement : internalTabList) {
                 if (internalListElement.findElement(By.xpath("./a")).getAttribute("href").contains(tab.getSubTabsName())) {
                     Actions actions = new Actions(driver);
                     actions.moveToElement(searchedTab.findElement(By.xpath("./a"))).moveToElement(internalListElement.findElement(By.xpath("./a"))).click().build().perform();
-                    break;
+                    break search;
                 }
             }
-        }
+        }}
+
+
+
 
         switch (tab) {
             case MOBILE_TESTING:return (T) new MobileTestingPage();
