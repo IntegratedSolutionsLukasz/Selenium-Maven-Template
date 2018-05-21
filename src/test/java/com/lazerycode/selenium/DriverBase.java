@@ -36,6 +36,7 @@ public class DriverBase {
     public static void clearCookies() {
         try {
             driverFactory.get().getStoredDriver().manage().deleteAllCookies();
+            getDriver().quit();
         } catch (Exception ignored) {
             System.out.println("Unable to clear cookies, driver object is not viable...");
         }

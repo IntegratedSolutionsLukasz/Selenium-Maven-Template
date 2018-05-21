@@ -40,7 +40,10 @@ public class GoogleExampleIT extends DriverBase {
 
         CareerTestingPage careerTestingPage = qualityMindsHomePage.clickTab(CAREER);
         careerTestingPage.clickApllyNow();
+        careerTestingPage.uploadFile("C:\\Users\\lukasz.wiszowaty\\Downloads\\UsefulAutomatedSOftwareTestingMetrics.pdf");
 
+        careerTestingPage.switchToLanguage(QualityMindsHomePage.Language.DE);
+        careerTestingPage.checkCurrentURL("http://www.qualityminds.de/content/bewerbung");
         System.out.println("aa");
     }
 }

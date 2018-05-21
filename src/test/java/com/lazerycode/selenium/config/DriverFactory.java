@@ -30,8 +30,8 @@ public class DriverFactory {
         DriverType driverType = CHROME;
         //String browser = System.getProperty("browser", driverType.toString()).toUpperCase();
         try {
-            if(browser!=null){
-                driverType = valueOf(browser);
+            if (browser != null) {
+                driverType = valueOf(browser.toUpperCase());
             }
         } catch (IllegalArgumentException ignored) {
             System.err.println("Unknown driver specified, defaulting to '" + driverType + "'...");

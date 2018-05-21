@@ -108,6 +108,10 @@ public class AbstractPage {
         return null;
     }
 
+    public void checkCurrentURL(String s) {
+        Assert.assertEquals(s,driver.getCurrentUrl());
+    }
+
     public enum Tabs {
         CAREER("Career"),
         SERVICES("Services");

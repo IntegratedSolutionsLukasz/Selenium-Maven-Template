@@ -18,6 +18,7 @@ public class MobileTestingPage extends AbstractPage{
     }
 
     public void verifyThatTabIsHighlighted(Tabs tab) {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.attributeContains(driver.findElement(By.linkText(tab.getTabName())),"class","active"));
         Assert.assertTrue(driver.findElement(By.linkText(tab.getTabName())).getAttribute("class").contains("active"),tab+" is active?");
     }
 
@@ -29,6 +30,8 @@ public class MobileTestingPage extends AbstractPage{
     }
 
     public void verifyThatRonWernerIsContact() {
+        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//p[contains(text(),'Ron Werner | Team Lead Mobile Testing')]"))));
+
         Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Ron Werner | Team Lead Mobile Testing')]")).isDisplayed());
     }
 }
